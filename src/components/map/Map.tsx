@@ -1,9 +1,9 @@
 import React from 'react';
-
 import mapboxgl from 'mapbox-gl';
 
+import { LocationsMap, Tweet } from '../../utils/types';
+
 import '../../styles/map/Map.scss';
-import { LocationsMap, Tweet } from '../../util/types';
 
 interface MapProps {
     tweetLocations: LocationsMap;
@@ -14,6 +14,7 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const map = React.useRef<mapboxgl.Map | null>(null);
 
+  // Initialize the map
   React.useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN ?? '';
     map.current = new mapboxgl.Map({

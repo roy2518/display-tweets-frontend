@@ -2,10 +2,11 @@ import React from 'react';
 
 import Map from './components/map/Map';
 
+import getLocationDetails from './utils/api/geocoding';
+import searchTweets from './utils/api/twitter';
+import { LocationsMap, Tweet } from './utils/types';
+
 import './App.scss';
-import { LocationsMap, Tweet } from './util/types';
-import searchTweets from './api/twitter';
-import getLocationDetails from './api/geocoding';
 
 function App(): JSX.Element {
   const [hashtag] = React.useState('CatsOfTwitter');
