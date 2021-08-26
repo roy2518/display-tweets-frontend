@@ -3,8 +3,14 @@ import React from 'react';
 import mapboxgl from 'mapbox-gl';
 
 import '../../styles/map/Map.scss';
+import { LocationsMap, Tweet } from '../../util/types';
 
-const Map = (): JSX.Element => {
+interface MapProps {
+    tweetLocations: LocationsMap;
+    tweets: Tweet[];
+}
+
+const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const map = React.useRef<mapboxgl.Map | null>(null);
 

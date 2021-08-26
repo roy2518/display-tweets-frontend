@@ -24,7 +24,7 @@ export interface LocationsMap {
 }
 
 export interface SearchTweetsAPIResponse {
-    'data.tweets': Tweet[];
+    data: { tweets: Tweet[] };
     'next_token': string;
 }
 
