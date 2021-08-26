@@ -1,17 +1,7 @@
-import { Tweet } from '../util/types';
+import { APIError, SearchTweetsAPIResponse } from '../util/types';
 
 const API_ENDPOINT = 'https://secure-anchorage-29952.herokuapp.com';
 const API_ROUTE = '/api/tweets';
-
-interface SearchTweetsAPIResponse {
-  'data.tweets': Tweet[];
-  'next_token': string;
-}
-
-interface SearchTweetsAPIError {
-  detail: string;
-  title: string;
-}
 
 // Retrieve tweets containing a given hashtag.
 // The parameter 'nextToken' is optional and is
@@ -23,7 +13,7 @@ const searchTweets = async (hashtag: string, nextToken?: string)
   if (response.ok) {
     return (await response.json()) as SearchTweetsAPIResponse;
   }
-  const error: SearchTweetsAPIError = await response.json();
+  const error: APIError = await response.json();
   throw new Error(error.detail);
 };
 

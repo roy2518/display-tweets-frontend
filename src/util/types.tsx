@@ -1,3 +1,33 @@
+export interface APIError {
+    detail: string;
+    title: string;
+}
+
+export interface LocationAddress {
+    country: string;
+    'country_code': string;
+}
+
+export interface LocationsAPIResponse {
+    data: LocationsMap;
+}
+
+export interface LocationDetails {
+    address: LocationAddress;
+    'display_name': string;
+    lat: number;
+    lon: number;
+}
+
+export interface LocationsMap {
+    [key: string]: LocationDetails;
+}
+
+export interface SearchTweetsAPIResponse {
+    'data.tweets': Tweet[];
+    'next_token': string;
+}
+
 export interface Tweet {
     author: TweetAuthor;
     tweet: TweetContent;
