@@ -1,4 +1,4 @@
-import { APIError, SearchTweetsAPIResponse } from '../types';
+import { APIError, SearchTweetsAPIResponse } from '../utils/types';
 
 const API_ENDPOINT = 'https://secure-anchorage-29952.herokuapp.com';
 const API_ROUTE = '/api/tweets';

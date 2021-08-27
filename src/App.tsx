@@ -2,8 +2,8 @@ import React from 'react';
 
 import Map from './components/map/Map';
 
-import getLocationDetails from './utils/api/geocoding';
-import searchTweets from './utils/api/twitter';
+import getLocationDetails from './api/geocoding';
+import searchTweets from './api/twitter';
 import { LocationsMap, Tweet } from './utils/types';
 
 import './App.scss';
