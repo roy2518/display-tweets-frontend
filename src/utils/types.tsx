@@ -23,6 +23,17 @@ export interface LocationsMap {
     [key: string]: LocationDetails;
 }
 
+export interface MapboxFeature {
+    geometry: {
+        coordinates: number[];
+        type: string;
+    }
+    properties: {
+        data: Tweet;
+    }
+    type: string;
+}
+
 export interface SearchTweetsAPIResponse {
     data: { tweets: Tweet[] };
     'next_token': string;
