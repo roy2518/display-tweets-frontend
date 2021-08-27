@@ -29,4 +29,3 @@ export const convertTweetsToMapboxFeatures = (tweets: Tweet[], locationsMap: Loc
     (tweet) => convertTweetToMapboxFeature(tweet, locationsMap[tweet.author.location]),
   );
 };
-

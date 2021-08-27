@@ -26,12 +26,12 @@ export interface LocationsMap {
 export interface MapboxFeature {
     geometry: {
         coordinates: number[];
-        type: string;
+        type: 'Point';
     }
     properties: {
         data: Tweet;
     }
-    type: string;
+    type: 'Feature';
 }
 
 export interface SearchTweetsAPIResponse {
