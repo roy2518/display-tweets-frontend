@@ -4,6 +4,7 @@ import Map from './components/map/Map';
 
 import getLocationDetails from './api/geocoding';
 import searchTweets from './api/twitter';
+
 import { LocationsMap, Tweet } from './utils/types';
 
 import './App.scss';

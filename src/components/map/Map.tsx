@@ -1,11 +1,11 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
 
+import { convertTweetsToMapboxFeatures } from '../../utils/map';
 import { LocationsMap, Tweet } from '../../utils/types';
 
+import MapMarker from '../../assets/map_marker.png';
 import '../../styles/map/Map.scss';
-import TwitterLogo from '../../assets/twitter_logo.png';
-import { convertTweetsToMapboxFeatures } from '../../utils/map';
 
 interface MapProps {
     tweetLocations: LocationsMap;
@@ -27,15 +27,15 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
     });
   }, []);
 
-  // Display markers on the map for each Tweet
+  // Load the marker image and display markers on the map
   React.useEffect(() => {
     if (map.current == null) {
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const currentMap = map.current!;
-    currentMap.on('style.load', () => {
-      currentMap.loadImage(TwitterLogo, (error, image) => {
+    currentMap.on('load', () => {
+      currentMap.loadImage(MapMarker, (error, image) => {
         if (error) throw error;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const loadedImage = image!;
@@ -54,7 +54,7 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
           layout: {
             'icon-image': 'custom-marker',
             'icon-allow-overlap': true,
-            'icon-size': 0.02,
+            'icon-size': 0.6,
           },
         });
       });
@@ -63,14 +63,20 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
 
   // Update the map when Tweet information is updated
   React.useEffect(() => {
-    if (map.current !== null) {
-      const geoJsonSource = map.current.getSource('points') as mapboxgl.GeoJSONSource;
-      if (!geoJsonSource) return;
-      geoJsonSource.setData({
-        type: 'FeatureCollection',
-        features: displayTweets,
-      });
-    }
+    (async () => {
+      if (map.current !== null) {
+        // Wait for map to be loaded first
+        while (!map.current.loaded || !map.current.getSource('points')) {
+          // eslint-disable-next-line no-await-in-loop
+          await new Promise((resolve) => setTimeout(resolve, 200));
+        }
+        const geoJsonSource = map.current.getSource('points') as mapboxgl.GeoJSONSource;
+        geoJsonSource.setData({
+          type: 'FeatureCollection',
+          features: displayTweets,
+        });
+      }
+    })();
   }, [tweetLocations, tweets]);
 
   return <div ref={mapContainer} className="map" />;
