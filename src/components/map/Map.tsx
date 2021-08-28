@@ -61,6 +61,23 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
     });
   }, []);
 
+  // Manage interactions with markers
+  React.useEffect(() => {
+    const currentMap = map.current;
+    if (currentMap) {
+      // Zoom in when marker is clicked
+      currentMap.on('click', 'symbols', (e) => {
+        if (e.features && e.features[0].geometry.type === 'Point') {
+          const { coordinates } = e.features[0].geometry;
+          currentMap.flyTo({
+            center: [coordinates[0], coordinates[1]],
+            zoom: 3,
+          });
+        }
+      });
+    }
+  }, []);
+
   // Update the map when Tweet information is updated
   React.useEffect(() => {
     (async () => {
