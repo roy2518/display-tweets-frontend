@@ -34,7 +34,7 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
     }
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const currentMap = map.current!;
-    currentMap.on('load', () => {
+    currentMap.on('style.load', () => {
       currentMap.loadImage(MapMarker, (error, image) => {
         if (error) throw error;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -71,7 +71,7 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
           const { coordinates } = e.features[0].geometry;
           currentMap.flyTo({
             center: [coordinates[0], coordinates[1]],
-            zoom: 3,
+            zoom: 5,
           });
         }
       });
