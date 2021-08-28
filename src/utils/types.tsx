@@ -46,7 +46,7 @@ export interface Tweet {
 
 export interface TweetAuthor {
     id: string;
-    location: string;
+    location?: string;
     name: string;
     'profile_image_url': string;
     username: string;

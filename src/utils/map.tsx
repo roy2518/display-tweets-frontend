@@ -23,9 +23,9 @@ const convertTweetToMapboxFeature = (tweet: Tweet, locationDetails: LocationDeta
 export const convertTweetsToMapboxFeatures = (tweets: Tweet[], locationsMap: LocationsMap)
 : MapboxFeature[] => {
   const tweetsWithLocations = tweets.filter(
-    (tweet) => locationsMap[tweet.author.location] !== undefined,
+    (tweet) => tweet.author.location && locationsMap[tweet.author.location],
   );
   return tweetsWithLocations.map(
-    (tweet) => convertTweetToMapboxFeature(tweet, locationsMap[tweet.author.location]),
+    (tweet) => convertTweetToMapboxFeature(tweet, locationsMap[tweet.author.location ?? '']),
   );
 };

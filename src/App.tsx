@@ -24,7 +24,8 @@ function App(): JSX.Element {
       setPageToken(tweetsJson.next_token);
 
       const locationsJson = await getLocationDetails(
-        tweetsJson.data.tweets.map((tweet) => tweet.author.location),
+        tweetsJson.data.tweets.map((tweet) => tweet.author.location ?? '')
+          .filter((locationName) => locationName),
       );
       setLocationDetails(locationsJson.data);
     })();
