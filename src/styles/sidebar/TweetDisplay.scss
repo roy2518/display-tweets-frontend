@@ -10,7 +10,14 @@ $avatar-width: 46px;
 }
 
 .tweet {
-    clear: both;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 16px;
+    border-color: #eee #ddd #bbb;
+    border-radius: 5px;
+    border-width: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    padding: 8px;
 }
 
 .tweetContent {
