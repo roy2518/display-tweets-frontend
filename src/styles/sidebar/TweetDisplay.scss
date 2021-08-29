@@ -1,0 +1,19 @@
+$avatar-height: 46px;
+$avatar-width: 46px;
+
+
+.avatar {
+    border-radius: 9999px;
+    float: left;
+    height: $avatar-height;
+    width: $avatar-width;
+}
+
+.tweet {
+    clear: both;
+}
+
+.tweetContent {
+    font-size: 14px;
+    margin-left: calc(#{$avatar-width} + 12px);
+}

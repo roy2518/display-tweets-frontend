@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Map from './components/map/Map';
+import Sidebar from './components/sidebar/Sidebar';
 
 import getLocationDetails from './api/geocoding';
 import searchTweets from './api/twitter';
@@ -34,6 +35,7 @@ function App(): JSX.Element {
   return (
     <div>
       <Map tweetLocations={locationDetails} tweets={tweets} />
+      <Sidebar tweets={tweets} />
     </div>
   );
 }
