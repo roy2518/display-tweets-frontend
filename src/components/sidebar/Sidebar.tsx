@@ -11,7 +11,9 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ tweets }: SidebarProps): JSX.Element => {
-  const displayTweets = tweets.map((tweet) => <TweetDisplay key={tweet.tweet.id} tweet={tweet} />);
+  const displayTweets = tweets.map(
+    (tweet) => <TweetDisplay key={tweet.tweet.id} tweetId={tweet.tweet.id} />,
+  );
 
   return <div className="sidebar">{displayTweets}</div>;
 };

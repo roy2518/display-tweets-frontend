@@ -1,20 +1,14 @@
 import React from 'react';
-
-import { Tweet } from '../../utils/types';
+import { Tweet } from 'react-twitter-widgets';
 
 import '../../styles/sidebar/TweetDisplay.scss';
 
 interface TweetProps {
-    tweet: Tweet;
+    tweetId: string;
 }
 
-const TweetDisplay = ({ tweet }: TweetProps): JSX.Element => (
-  <div className="tweet">
-    <img alt="avatar" className="avatar" src={tweet.author.profile_image_url} />
-    <div className="tweetContent">
-      {tweet.tweet.text}
-    </div>
-  </div>
+const TweetDisplay = ({ tweetId }: TweetProps): JSX.Element => (
+  <Tweet options={{ dnt: true, hide_thread: true }} tweetId={tweetId} />
 );
 
 export default TweetDisplay;
