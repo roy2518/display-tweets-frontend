@@ -8,7 +8,9 @@ const API_ROUTE = '/api/locations';
 // used to fetch the next page of results.
 const getLocationDetails = async (locationNames: string[])
 : Promise<LocationsAPIResponse> => {
+  console.log(JSON.stringify(locationNames));
   const urlWithParams = `${API_ENDPOINT}${API_ROUTE}?names=${JSON.stringify(locationNames)}`;
+  console.log(urlWithParams);
   const response = await fetch(urlWithParams);
   if (response.ok) {
     return (await response.json()) as LocationsAPIResponse;

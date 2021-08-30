@@ -1,5 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
+
+import TweetDisplay from '../sidebar/TweetDisplay';
 
 import { convertTweetsToMapboxFeatures } from '../../utils/map';
 import { LocationsMap, Tweet } from '../../utils/types';
@@ -95,6 +98,48 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
       }
     })();
   }, [tweetLocations, tweets]);
+
+  React.useEffect(() => {
+    // Create a popup, but don't add it to the map yet.
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+    });
+    const currentMap = map.current;
+    if (currentMap !== null) {
+      currentMap.on('mouseenter', 'symbols', (e) => {
+        if (e.features && e.features[0].geometry.type === 'Point') {
+          // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+          currentMap.getCanvas().style.cursor = 'pointer';
+          const { coordinates } = e.features[0].geometry;
+
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          // Create component programmatically in order to insert it as html
+          const div = document.createElement('div');
+          const tweetId = JSON.parse(e.features![0].properties!.data).tweet.id;
+          ReactDOM.render(<TweetDisplay tweetId={tweetId} />, div);
+
+          // Populate the popup and set its coordinates
+          // based on the feature found.
+          popup.setLngLat([coordinates[0], coordinates[1]])
+            .setDOMContent(div)
+            .addTo(currentMap);
+        }
+      });
+
+      // Change cursor back to a pointer when it leaves a feature in the 'symbols' layer
+      currentMap.on('mouseleave', 'symbols', () => {
+        currentMap.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+    }
+  }, []);
 
   return <div ref={mapContainer} className="map" />;
 };
