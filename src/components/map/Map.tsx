@@ -100,11 +100,6 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
   }, [tweetLocations, tweets]);
 
   React.useEffect(() => {
-    // Create a popup, but don't add it to the map yet.
-    const popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false,
-    });
     const currentMap = map.current;
     if (currentMap !== null) {
       currentMap.on('mouseenter', 'symbols', (e) => {
@@ -123,11 +118,12 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
           // Create component programmatically in order to insert it as html
           const div = document.createElement('div');
           const tweetId = JSON.parse(e.features![0].properties!.data).tweet.id;
-          ReactDOM.render(<TweetDisplay tweetId={tweetId} />, div);
+          ReactDOM.render(<div className="popupContainer"><TweetDisplay tweetId={tweetId} /></div>, div);
 
           // Populate the popup and set its coordinates
           // based on the feature found.
-          popup.setLngLat([coordinates[0], coordinates[1]])
+          // TODO: Make Popup not go off screen (see https://jsfiddle.net/api/post/library/pure/)
+          new mapboxgl.Popup({ maxWidth: 'none' }).setLngLat([coordinates[0], coordinates[1]])
             .setDOMContent(div)
             .addTo(currentMap);
         }
@@ -136,7 +132,6 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
       // Change cursor back to a pointer when it leaves a feature in the 'symbols' layer
       currentMap.on('mouseleave', 'symbols', () => {
         currentMap.getCanvas().style.cursor = '';
-        popup.remove();
       });
     }
   }, []);
