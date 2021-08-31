@@ -101,6 +101,10 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
 
   React.useEffect(() => {
     const currentMap = map.current;
+    // Create a popup, but don't add it to the map yet.
+    const popup = new mapboxgl.Popup({
+      maxWidth: 'none',
+    });
     if (currentMap !== null) {
       currentMap.on('mouseenter', 'symbols', (e) => {
         if (e.features && e.features[0].geometry.type === 'Point') {
@@ -123,7 +127,7 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
           // Populate the popup and set its coordinates
           // based on the feature found.
           // TODO: Make Popup not go off screen (see https://jsfiddle.net/api/post/library/pure/)
-          new mapboxgl.Popup({ maxWidth: 'none' }).setLngLat([coordinates[0], coordinates[1]])
+          popup.setLngLat([coordinates[0], coordinates[1]])
             .setDOMContent(div)
             .addTo(currentMap);
         }
