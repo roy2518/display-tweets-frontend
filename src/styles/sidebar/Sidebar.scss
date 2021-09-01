@@ -1,7 +1,7 @@
 .sidebar {
     box-sizing: border-box;
     height: 100%;
-    overflow: auto;
+    overflow-y: scroll;
     padding: 6px;
     position: fixed;
     right: 0;

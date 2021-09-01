@@ -6,9 +6,7 @@ interface TweetProps {
 }
 
 const TweetDisplay = ({ tweetId }: TweetProps): JSX.Element => (
-  <div className="tweetContainer">
-    <Tweet options={{ dnt: true, hide_thread: true }} tweetId={tweetId} />
-  </div>
+  <Tweet options={{ dnt: true, hide_thread: true }} tweetId={tweetId} />
 );
 
 export default TweetDisplay;

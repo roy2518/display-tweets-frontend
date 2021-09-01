@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 
-import TweetDisplay from '../sidebar/TweetDisplay';
+import TweetPopup from './TweetPopup';
 
 import { convertTweetsToMapboxFeatures } from '../../utils/map';
 import { LocationsMap, Tweet } from '../../utils/types';
@@ -64,11 +64,10 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
     });
   }, []);
 
-  // Manage interactions with markers
+  // Zoom in when a marker is clicked
   React.useEffect(() => {
     const currentMap = map.current;
     if (currentMap) {
-      // Zoom in when marker is clicked
       currentMap.on('click', 'symbols', (e) => {
         if (e.features && e.features[0].geometry.type === 'Point') {
           const { coordinates } = e.features[0].geometry;
@@ -99,11 +98,12 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
     })();
   }, [tweetLocations, tweets]);
 
+  // Display popup when user hovers over a marker
   React.useEffect(() => {
     const currentMap = map.current;
     // Create a popup, but don't add it to the map yet.
     const popup = new mapboxgl.Popup({
-      maxWidth: 'none',
+      maxWidth: '500px',
     });
     if (currentMap !== null) {
       currentMap.on('mouseenter', 'symbols', (e) => {
@@ -121,12 +121,11 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
 
           // Create component programmatically in order to insert it as html
           const div = document.createElement('div');
-          const tweetId = JSON.parse(e.features![0].properties!.data).tweet.id;
-          ReactDOM.render(<div className="popupContainer"><TweetDisplay tweetId={tweetId} /></div>, div);
+          const tweetId = JSON.parse(e.features?.[0].properties?.data).tweet.id ?? '';
+          ReactDOM.render(<TweetPopup tweetId={tweetId} />, div);
 
           // Populate the popup and set its coordinates
           // based on the feature found.
-          // TODO: Make Popup not go off screen (see https://jsfiddle.net/api/post/library/pure/)
           popup.setLngLat([coordinates[0], coordinates[1]])
             .setDOMContent(div)
             .addTo(currentMap);
