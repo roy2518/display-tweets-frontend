@@ -4,6 +4,7 @@ import TweetDisplay from '../common/TweetDisplay';
 
 import { Tweet } from '../../utils/types';
 
+import SearchIcon from '../../assets/search.svg';
 import '../../styles/sidebar/Sidebar.scss';
 
 interface SidebarProps {
@@ -16,15 +17,19 @@ const Sidebar = ({ hashtag, tweets, updateHashtag }: SidebarProps): JSX.Element 
   const [hashtagInput, setHashtagInput] = React.useState(hashtag);
 
   const searchBar = (
-    <div>
-      <form action="#" onSubmit={() => updateHashtag(hashtagInput)}>
-        <input
-          className="hashtagInput"
-          onChange={(e) => setHashtagInput(e.target.value)}
-          placeholder="Search for a hashtag..."
-          value={hashtagInput}
-        />
-      </form>
+    <div className="searchBar">
+      <img alt="Search Icon" src={SearchIcon} />
+      <input
+        className="hashtagInput"
+        onChange={(e) => setHashtagInput(e.target.value)}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            updateHashtag(hashtagInput);
+          }
+        }}
+        placeholder="Search for a hashtag..."
+        value={hashtagInput}
+      />
     </div>
   );
 
