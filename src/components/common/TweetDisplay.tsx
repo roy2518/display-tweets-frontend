@@ -17,7 +17,7 @@ const TweetDisplay = ({ tweet }: TweetProps): JSX.Element => (
     <div className="tweetBody">
       <div className="tweetHeader">
         <a href={`http://twitter.com/${tweet.author.username}`} target="_blank" rel="noreferrer">
-          <span className="authorName">{tweet.author.name}</span>
+          <span>{tweet.author.name}</span>
         </a>
         <div className="dotSeparator">
           ·
