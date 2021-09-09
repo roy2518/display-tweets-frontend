@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 
-import TweetPopup from './TweetPopup';
+import TweetDisplay from '../common/TweetDisplay';
 
 import { convertTweetsToMapboxFeatures } from '../../utils/map';
 import { LocationsMap, Tweet } from '../../utils/types';
@@ -103,7 +103,7 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
     const currentMap = map.current;
     // Create a popup, but don't add it to the map yet.
     const popup = new mapboxgl.Popup({
-      maxWidth: '500px',
+      maxWidth: '300px',
     });
     if (currentMap !== null) {
       currentMap.on('mouseenter', 'symbols', (e) => {
@@ -121,8 +121,8 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
 
           // Create component programmatically in order to insert it as html
           const div = document.createElement('div');
-          const tweetId = JSON.parse(e.features?.[0].properties?.data).tweet.id ?? '';
-          ReactDOM.render(<TweetPopup tweetId={tweetId} />, div);
+          const tweet = JSON.parse(e.features?.[0].properties?.data);
+          ReactDOM.render(<TweetDisplay tweet={tweet} />, div);
 
           // Populate the popup and set its coordinates
           // based on the feature found.
