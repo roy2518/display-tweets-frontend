@@ -10,8 +10,10 @@ import { LocationsMap, Tweet } from './utils/types';
 
 import './App.scss';
 
+const DEFAULT_HASHTAG = 'CatsOfTwitter';
+
 function App(): JSX.Element {
-  const [hashtag] = React.useState('CatsOfTwitter');
+  const [hashtag, setHashtag] = React.useState(DEFAULT_HASHTAG);
   const [tweets, setTweets] = React.useState<Tweet[]>([]);
   const [pageToken, setPageToken] = React.useState<string | undefined>(undefined);
 
@@ -35,7 +37,7 @@ function App(): JSX.Element {
   return (
     <div>
       <Map tweetLocations={locationDetails} tweets={tweets} />
-      <Sidebar tweets={tweets} />
+      <Sidebar hashtag={hashtag} tweets={tweets} updateHashtag={setHashtag} />
     </div>
   );
 }
