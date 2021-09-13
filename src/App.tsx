@@ -16,13 +16,14 @@ function App(): JSX.Element {
   const [hashtag, setHashtag] = React.useState(DEFAULT_HASHTAG);
   const [tweets, setTweets] = React.useState<Tweet[]>([]);
   const [pageToken, setPageToken] = React.useState<string | undefined>(undefined);
+  const [loadMore, setLoadMore] = React.useState(false);
 
   const [locationDetails, setLocationDetails] = React.useState<LocationsMap>({});
 
-  // Load tweets and locations data
+  // Load first 'page' of tweet and location data
   React.useEffect(() => {
     (async () => {
-      const tweetsJson = await searchTweets(hashtag, pageToken);
+      const tweetsJson = await searchTweets(hashtag);
       setTweets(tweetsJson.data.tweets);
       setPageToken(tweetsJson.next_token);
 
@@ -34,10 +35,37 @@ function App(): JSX.Element {
     })();
   }, [hashtag]);
 
+  // Load next 'page' of tweet and location data
+  const loadMoreTweets = React.useCallback(async () => {
+    const tweetsJson = await searchTweets(hashtag, pageToken);
+    setTweets([...tweets, ...tweetsJson.data.tweets]);
+    setPageToken(tweetsJson.next_token);
+
+    const locationsJson = await getLocationDetails(
+      tweetsJson.data.tweets.map((tweet) => tweet.author.location ?? '')
+        .filter((locationName) => locationName),
+    );
+    setLocationDetails({ ...locationDetails, ...locationsJson.data });
+  }, [hashtag, pageToken, tweets]);
+
+  React.useEffect(() => {
+    (async () => {
+      if (loadMore) {
+        await loadMoreTweets();
+        setLoadMore(false);
+      }
+    })();
+  }, [loadMore]);
+
   return (
     <div>
       <Map tweetLocations={locationDetails} tweets={tweets} />
-      <Sidebar hashtag={hashtag} tweets={tweets} updateHashtag={setHashtag} />
+      <Sidebar
+        hashtag={hashtag}
+        loadMoreTweets={() => setLoadMore(true)}
+        tweets={tweets}
+        updateHashtag={setHashtag}
+      />
     </div>
   );
 }

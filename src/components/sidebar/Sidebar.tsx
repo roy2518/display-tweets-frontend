@@ -1,19 +1,26 @@
 import React from 'react';
 
+import InfiniteScroll from './InfiniteScroll';
 import TweetDisplay from '../common/TweetDisplay';
-
-import { Tweet } from '../../utils/types';
 
 import SearchIcon from '../../assets/search.svg';
 import '../../styles/sidebar/Sidebar.scss';
 
+import { Tweet } from '../../utils/types';
+
 interface SidebarProps {
     hashtag: string;
+    loadMoreTweets: () => void;
     tweets: Tweet[];
     updateHashtag: (hashtag: string) => void;
 }
 
-const Sidebar = ({ hashtag, tweets, updateHashtag }: SidebarProps): JSX.Element => {
+const Sidebar = ({
+  hashtag,
+  loadMoreTweets,
+  tweets,
+  updateHashtag,
+}: SidebarProps): JSX.Element => {
   const [hashtagInput, setHashtagInput] = React.useState(hashtag);
 
   const searchBar = (
@@ -33,8 +40,14 @@ const Sidebar = ({ hashtag, tweets, updateHashtag }: SidebarProps): JSX.Element 
     </div>
   );
 
-  const displayTweets = tweets.map(
-    (tweet) => <TweetDisplay key={tweet.tweet.id} tweet={tweet} />,
+  const displayTweets = (
+    <InfiniteScroll
+      loadMore={loadMoreTweets}
+    >
+      {tweets.map(
+        (tweet) => <TweetDisplay key={tweet.tweet.id} tweet={tweet} />,
+      )}
+    </InfiniteScroll>
   );
 
   return (
