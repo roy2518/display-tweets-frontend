@@ -35,7 +35,7 @@ function App(): JSX.Element {
     })();
   }, [hashtag]);
 
-  // Load next 'page' of tweet and location data
+  // Callback used to load the next 'page' of tweet and location data
   const loadMoreTweets = React.useCallback(async () => {
     const tweetsJson = await searchTweets(hashtag, pageToken);
     setTweets([...tweets, ...tweetsJson.data.tweets]);
@@ -46,8 +46,9 @@ function App(): JSX.Element {
         .filter((locationName) => locationName),
     );
     setLocationDetails({ ...locationDetails, ...locationsJson.data });
-  }, [hashtag, pageToken, tweets]);
+  }, [hashtag, locationDetails, pageToken, tweets]);
 
+  // Load the next 'page' of tweet and location data
   React.useEffect(() => {
     (async () => {
       if (loadMore) {

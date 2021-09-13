@@ -2,6 +2,7 @@ import React from 'react';
 
 interface InfiniteScrollProps {
     children: React.ReactNode[];
+    // Function to call when we have scrolled to the bottom of the results
     loadMore: () => void;
 }
 
