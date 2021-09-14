@@ -20,13 +20,23 @@ const TweetDisplay = ({ tweet }: TweetProps): JSX.Element => (
     }}
   >
     <div>
-      <a href={getUserProfileURL(tweet)} target="_blank" rel="noreferrer">
+      <a
+        href={getUserProfileURL(tweet)}
+        onClick={(e) => { e.stopPropagation(); }}
+        target="_blank"
+        rel="noreferrer"
+      >
         <img alt="User Avatar" className="userAvatar" src={tweet.author.profile_image_url} />
       </a>
     </div>
     <div className="tweetBody">
       <div className="tweetHeader">
-        <a href={getUserProfileURL(tweet)} target="_blank" rel="noreferrer">
+        <a
+          href={getUserProfileURL(tweet)}
+          onClick={(e) => { e.stopPropagation(); }}
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="authorName">{tweet.author.name}</span>
         </a>
         <div className="dotSeparator">
