@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import TimeAgo from 'react-timeago';
 
+import { getUserProfileURL, getUserTweetURL } from '../../utils/tweetDisplay';
 import { Tweet } from '../../utils/types';
 
 import '../../styles/common/TweetDisplay.scss';
@@ -10,14 +13,21 @@ interface TweetProps {
 }
 
 const TweetDisplay = ({ tweet }: TweetProps): JSX.Element => (
-  <div className="tweetContainer">
+  <div
+    className="tweetContainer"
+    onClick={() => {
+      window.open(getUserTweetURL(tweet))?.focus();
+    }}
+  >
     <div>
-      <img alt="User Avatar" className="userAvatar" src={tweet.author.profile_image_url} />
+      <a href={getUserProfileURL(tweet)} target="_blank" rel="noreferrer">
+        <img alt="User Avatar" className="userAvatar" src={tweet.author.profile_image_url} />
+      </a>
     </div>
     <div className="tweetBody">
       <div className="tweetHeader">
-        <a href={`http://twitter.com/${tweet.author.username}`} target="_blank" rel="noreferrer">
-          <span>{tweet.author.name}</span>
+        <a href={getUserProfileURL(tweet)} target="_blank" rel="noreferrer">
+          <span className="authorName">{tweet.author.name}</span>
         </a>
         <div className="dotSeparator">
           ·

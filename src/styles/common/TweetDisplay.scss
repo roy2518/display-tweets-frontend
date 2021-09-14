@@ -1,3 +1,9 @@
+.authorName {
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .dotSeparator {
     color: rgb(83, 100, 113);
     display: inline-block;
@@ -22,10 +28,19 @@
 
 .tweetContainer {
     display: flex;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+        cursor: pointer;
+    }
 }
 
 .userAvatar {
     border-radius: 9999px;
     height: 32px;
     width: 32px;
+
+    &:hover {
+        filter: brightness(0.80);
+    }
 }
