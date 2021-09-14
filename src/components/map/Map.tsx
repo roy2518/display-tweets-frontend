@@ -56,7 +56,6 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
           source: 'points',
           layout: {
             'icon-image': 'custom-marker',
-            'icon-allow-overlap': true,
             'icon-size': 0.6,
           },
         });

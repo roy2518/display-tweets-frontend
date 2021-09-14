@@ -21,7 +21,7 @@ const InfiniteScroll = ({
         await loadMore();
         setIsLoading(false);
       }
-    }, { threshold: 1 });
+    });
     if (node) observer.current.observe(node);
   }, [isLoading]);
 
