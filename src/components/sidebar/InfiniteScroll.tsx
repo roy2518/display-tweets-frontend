@@ -1,4 +1,8 @@
 import React from 'react';
+import Loader from 'react-loader-spinner';
+
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import 'styles/sidebar/InfiniteScroll.scss';
 
 interface InfiniteScrollProps {
     children: React.ReactNode[];
@@ -33,7 +37,15 @@ const InfiniteScroll = ({
           {child}
         </div>
       ))}
-      {isLoading && <h4>Loading...</h4>}
+      <div className="loader">
+        <Loader
+          color="#1DA1F2"
+          height={25}
+          type="Oval"
+          visible={isLoading}
+          width={25}
+        />
+      </div>
     </div>
   );
 };
