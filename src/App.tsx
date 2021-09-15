@@ -16,27 +16,11 @@ function App(): JSX.Element {
   const [hashtag, setHashtag] = React.useState(DEFAULT_HASHTAG);
   const [tweets, setTweets] = React.useState<Tweet[]>([]);
   const [pageToken, setPageToken] = React.useState<string | undefined>(undefined);
-  const [loadMore, setLoadMore] = React.useState(false);
 
   const [locationDetails, setLocationDetails] = React.useState<LocationsMap>({});
 
-  // Load first 'page' of tweet and location data
-  React.useEffect(() => {
-    (async () => {
-      const tweetsJson = await searchTweets(hashtag);
-      setTweets(tweetsJson.data.tweets);
-      setPageToken(tweetsJson.next_token);
-
-      const locationsJson = await getLocationDetails(
-        tweetsJson.data.tweets.map((tweet) => tweet.author.location ?? '')
-          .filter((locationName) => locationName),
-      );
-      setLocationDetails(locationsJson.data);
-    })();
-  }, [hashtag]);
-
-  // Callback used to load the next 'page' of tweet and location data
-  const loadMoreTweets = React.useCallback(async () => {
+  // Callback used to load a 'page' of tweet and location data
+  const loadTweets = React.useCallback(async () => {
     const tweetsJson = await searchTweets(hashtag, pageToken);
     setTweets([...tweets, ...tweetsJson.data.tweets]);
     setPageToken(tweetsJson.next_token);
@@ -48,22 +32,19 @@ function App(): JSX.Element {
     setLocationDetails({ ...locationDetails, ...locationsJson.data });
   }, [hashtag, locationDetails, pageToken, tweets]);
 
-  // Load the next 'page' of tweet and location data
+  // Load tweets on mount and whenever hashtag updates
   React.useEffect(() => {
     (async () => {
-      if (loadMore) {
-        await loadMoreTweets();
-        setLoadMore(false);
-      }
+      await loadTweets();
     })();
-  }, [loadMore]);
+  }, [hashtag]);
 
   return (
     <div>
       <Map tweetLocations={locationDetails} tweets={tweets} />
       <Sidebar
         hashtag={hashtag}
-        loadMoreTweets={() => setLoadMore(true)}
+        loadMoreTweets={loadTweets}
         tweets={tweets}
         updateHashtag={setHashtag}
       />
