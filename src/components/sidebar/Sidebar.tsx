@@ -11,7 +11,7 @@ import { Tweet } from 'utils/types';
 
 interface SidebarProps {
     hashtag: string;
-    loadMoreTweets: () => void;
+    loadMoreTweets: () => Promise<void>;
     tweets: Tweet[];
     updateHashtag: (hashtag: string) => void;
 }

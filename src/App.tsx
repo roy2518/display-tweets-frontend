@@ -16,11 +16,10 @@ function App(): JSX.Element {
   const [hashtag, setHashtag] = React.useState(DEFAULT_HASHTAG);
   const [tweets, setTweets] = React.useState<Tweet[]>([]);
   const [pageToken, setPageToken] = React.useState<string | undefined>(undefined);
-
   const [locationDetails, setLocationDetails] = React.useState<LocationsMap>({});
 
   // Callback used to load a 'page' of tweet and location data
-  const loadTweets = React.useCallback(async () => {
+  const loadTweets = async () => {
     const tweetsJson = await searchTweets(hashtag, pageToken);
     setTweets([...tweets, ...tweetsJson.data.tweets]);
     setPageToken(tweetsJson.next_token);
@@ -30,9 +29,9 @@ function App(): JSX.Element {
         .filter((locationName) => locationName),
     );
     setLocationDetails({ ...locationDetails, ...locationsJson.data });
-  }, [hashtag, locationDetails, pageToken, tweets]);
+  };
 
-  // Load tweets on mount and whenever hashtag updates
+  // Load tweets on mount and whenever hashtag is updated
   React.useEffect(() => {
     (async () => {
       await loadTweets();
@@ -46,7 +45,11 @@ function App(): JSX.Element {
         hashtag={hashtag}
         loadMoreTweets={loadTweets}
         tweets={tweets}
-        updateHashtag={setHashtag}
+        updateHashtag={(newHashtag: string) => {
+          setTweets([]);
+          setPageToken(undefined);
+          setHashtag(newHashtag);
+        }}
       />
     </div>
   );
