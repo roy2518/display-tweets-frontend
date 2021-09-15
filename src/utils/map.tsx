@@ -3,7 +3,7 @@ import {
   LocationsMap,
   MapboxFeature,
   Tweet,
-} from './types';
+} from 'utils/types';
 
 // Create a Mapbox feature from a Tweet. Used by Mapbox to display the Tweet.
 const convertTweetToMapboxFeature = (tweet: Tweet, locationDetails: LocationDetails)

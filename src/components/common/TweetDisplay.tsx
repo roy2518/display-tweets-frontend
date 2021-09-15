@@ -3,10 +3,12 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
 
-import { getUserProfileURL, getUserTweetURL } from '../../utils/tweetDisplay';
-import { Tweet } from '../../utils/types';
+import TweetText from 'components/common/TweetText';
 
-import '../../styles/common/TweetDisplay.scss';
+import 'styles/common/TweetDisplay.scss';
+
+import { getUserProfileURL, getTweetURL } from 'utils/twitterUrls';
+import { Tweet } from 'utils/types';
 
 interface TweetProps {
     tweet: Tweet;
@@ -16,12 +18,12 @@ const TweetDisplay = ({ tweet }: TweetProps): JSX.Element => (
   <div
     className="tweetContainer"
     onClick={() => {
-      window.open(getUserTweetURL(tweet))?.focus();
+      window.open(getTweetURL(tweet))?.focus();
     }}
   >
     <div>
       <a
-        href={getUserProfileURL(tweet)}
+        href={getUserProfileURL(tweet.author.username)}
         onClick={(e) => { e.stopPropagation(); }}
         target="_blank"
         rel="noreferrer"
@@ -32,7 +34,7 @@ const TweetDisplay = ({ tweet }: TweetProps): JSX.Element => (
     <div className="tweetBody">
       <div className="tweetHeader">
         <a
-          href={getUserProfileURL(tweet)}
+          href={getUserProfileURL(tweet.author.username)}
           onClick={(e) => { e.stopPropagation(); }}
           target="_blank"
           rel="noreferrer"
@@ -47,7 +49,7 @@ const TweetDisplay = ({ tweet }: TweetProps): JSX.Element => (
         </span>
       </div>
       <div className="tweetText">
-        {tweet.tweet.text}
+        <TweetText tweet={tweet} />
       </div>
     </div>
   </div>

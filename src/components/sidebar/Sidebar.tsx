@@ -1,12 +1,13 @@
 import React from 'react';
 
-import InfiniteScroll from './InfiniteScroll';
-import TweetDisplay from '../common/TweetDisplay';
+import SearchIcon from 'assets/search.svg';
 
-import SearchIcon from '../../assets/search.svg';
-import '../../styles/sidebar/Sidebar.scss';
+import InfiniteScroll from 'components/sidebar/InfiniteScroll';
+import TweetDisplay from 'components/common/TweetDisplay';
 
-import { Tweet } from '../../utils/types';
+import 'styles/sidebar/Sidebar.scss';
+
+import { Tweet } from 'utils/types';
 
 interface SidebarProps {
     hashtag: string;

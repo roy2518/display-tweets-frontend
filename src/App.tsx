@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Map from './components/map/Map';
-import Sidebar from './components/sidebar/Sidebar';
+import getLocationDetails from 'api/geocoding';
+import searchTweets from 'api/twitter';
 
-import getLocationDetails from './api/geocoding';
-import searchTweets from './api/twitter';
+import Map from 'components/map/Map';
+import Sidebar from 'components/sidebar/Sidebar';
 
-import { LocationsMap, Tweet } from './utils/types';
+import { LocationsMap, Tweet } from 'utils/types';
 
-import './App.scss';
+import 'App.scss';
 
 const DEFAULT_HASHTAG = 'CatsOfTwitter';
 

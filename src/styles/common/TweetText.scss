@@ -1,0 +1,8 @@
+.entityLink {
+    color: rgba(29, 161, 242);
+
+    &:hover {
+        text-decoration: underline;
+        text-decoration-color: rgba(29, 161, 242);
+    }
+}

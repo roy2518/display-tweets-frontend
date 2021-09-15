@@ -1,6 +1,10 @@
 .authorName {
+    color: rgb(15, 20, 25);
+    font-weight: bold;
+
     &:hover {
         text-decoration: underline;
+        text-decoration-color: rgb(15, 20, 25);
     }
 }
 
@@ -20,8 +24,6 @@
     margin-left: 8px;
 
     & a {
-        color: rgb(29, 161, 242);
-        font-weight: bold;
         text-decoration: none;
     }
 }

@@ -55,6 +55,37 @@ export interface TweetAuthor {
 export interface TweetContent {
     'author_id': string;
     'created_at': string;
+    entities: TweetEntities;
     id: string;
     text: string;
+}
+
+export interface TweetEntities {
+    hashtags?: HashtagEntity[];
+    mentions?: MentionEntity[];
+    urls?: URLEntity[];
+}
+
+export type GenericTweetEntity = HashtagEntity | MentionEntity | URLEntity;
+
+export interface HashtagEntity {
+    end: number;
+    start: number;
+    tag: string;
+    type: 'hashtag';
+}
+
+export interface MentionEntity {
+    end: number;
+    id: string;
+    start: number;
+    type: 'mention';
+    username: string;
+}
+
+export interface URLEntity {
+    end: number;
+    start: number;
+    type: 'url';
+    url: string;
 }

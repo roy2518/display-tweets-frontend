@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 
-import TweetDisplay from '../common/TweetDisplay';
+import MapMarker from 'assets/map_marker.png';
 
-import { convertTweetsToMapboxFeatures } from '../../utils/map';
-import { LocationsMap, Tweet } from '../../utils/types';
+import TweetDisplay from 'components/common/TweetDisplay';
 
-import MapMarker from '../../assets/map_marker.png';
-import '../../styles/map/Map.scss';
+import 'styles/map/Map.scss';
+
+import { convertTweetsToMapboxFeatures } from 'utils/map';
+import { LocationsMap, Tweet } from 'utils/types';
 
 interface MapProps {
     tweetLocations: LocationsMap;
