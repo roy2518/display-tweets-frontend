@@ -7,7 +7,7 @@ import TweetText from 'components/common/TweetText';
 
 import 'styles/common/TweetDisplay.scss';
 
-import { getUserProfileURL, getTweetURL } from 'utils/twitterUrls';
+import { getUserProfileURL, getTweetURL } from 'utils/twitter/twitterUrls';
 import { Tweet } from 'utils/types';
 
 interface TweetProps {
