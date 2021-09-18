@@ -3,6 +3,7 @@ import React from 'react';
 import SearchIcon from 'assets/search.svg';
 
 import InfiniteScroll from 'components/sidebar/InfiniteScroll';
+import LoadingIndicator from 'components/common/LoadingIndicator';
 import TweetDisplay from 'components/common/TweetDisplay';
 
 import 'styles/sidebar/Sidebar.scss';
@@ -11,6 +12,7 @@ import { Tweet } from 'utils/types';
 
 interface SidebarProps {
     hashtag: string;
+    isLoading: boolean;
     loadMoreTweets: () => Promise<void>;
     tweets: Tweet[];
     updateHashtag: (hashtag: string) => void;
@@ -18,6 +20,7 @@ interface SidebarProps {
 
 const Sidebar = ({
   hashtag,
+  isLoading,
   loadMoreTweets,
   tweets,
   updateHashtag,
@@ -41,15 +44,21 @@ const Sidebar = ({
     </div>
   );
 
-  const displayTweets = (
-    <InfiniteScroll
-      loadMore={loadMoreTweets}
-    >
-      {tweets.map(
-        (tweet) => <TweetDisplay key={tweet.tweet.id} tweet={tweet} />,
-      )}
-    </InfiniteScroll>
-  );
+  const displayTweets = isLoading
+    ? (
+      <LoadingIndicator
+        isLoading={isLoading}
+      />
+    )
+    : (
+      <InfiniteScroll
+        loadMore={loadMoreTweets}
+      >
+        {tweets.map(
+          (tweet) => <TweetDisplay key={tweet.tweet.id} tweet={tweet} />,
+        )}
+      </InfiniteScroll>
+    );
 
   return (
     <div className="sidebar">

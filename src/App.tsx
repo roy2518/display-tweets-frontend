@@ -18,6 +18,8 @@ function App(): JSX.Element {
   const [pageToken, setPageToken] = React.useState<string | undefined>(undefined);
   const [locationDetails, setLocationDetails] = React.useState<LocationsMap>({});
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   // Callback used to load a 'page' of tweet and location data
   const loadTweets = async () => {
     const tweetsJson = await searchTweets(hashtag, pageToken);
@@ -34,7 +36,9 @@ function App(): JSX.Element {
   // Load tweets on mount and whenever hashtag is updated
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       await loadTweets();
+      setIsLoading(false);
     })();
   }, [hashtag]);
 
@@ -43,6 +47,7 @@ function App(): JSX.Element {
       <Map tweetLocations={locationDetails} tweets={tweets} />
       <Sidebar
         hashtag={hashtag}
+        isLoading={isLoading}
         loadMoreTweets={loadTweets}
         tweets={tweets}
         updateHashtag={(newHashtag: string) => {
