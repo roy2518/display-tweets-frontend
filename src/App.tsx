@@ -23,6 +23,7 @@ function App(): JSX.Element {
   // Callback used to load a 'page' of tweet and location data
   const loadTweets = async () => {
     const tweetsJson = await searchTweets(hashtag, pageToken);
+    if (!tweetsJson.data.tweets) return;
     setTweets([...tweets, ...tweetsJson.data.tweets]);
     setPageToken(tweetsJson.next_token);
 
