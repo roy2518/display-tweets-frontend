@@ -2,14 +2,18 @@ import React from 'react';
 
 import LoadingIndicator from 'components/common/LoadingIndicator';
 
+import 'styles/sidebar/InfiniteScroll.scss';
+
 interface InfiniteScrollProps {
     children: React.ReactNode[];
+    error: string | undefined;
     // Function to call when we have scrolled to the bottom of the results
     loadMore: () => Promise<void>;
 }
 
 const InfiniteScroll = ({
   children,
+  error,
   loadMore,
 }: InfiniteScrollProps): JSX.Element => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -35,6 +39,12 @@ const InfiniteScroll = ({
           {child}
         </div>
       ))}
+      {error && (
+        <div className="error">
+          <b>Error: </b>
+          {error}
+        </div>
+      )}
       <LoadingIndicator
         isLoading={isLoading}
       />

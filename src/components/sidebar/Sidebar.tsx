@@ -11,6 +11,7 @@ import 'styles/sidebar/Sidebar.scss';
 import { Tweet } from 'utils/types';
 
 interface SidebarProps {
+    error: string | undefined;
     hashtag: string;
     isLoading: boolean;
     loadMoreTweets: () => Promise<void>;
@@ -19,6 +20,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({
+  error,
   hashtag,
   isLoading,
   loadMoreTweets,
@@ -52,6 +54,7 @@ const Sidebar = ({
     )
     : (
       <InfiniteScroll
+        error={error}
         loadMore={loadMoreTweets}
       >
         {tweets.map(

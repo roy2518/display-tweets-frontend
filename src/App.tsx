@@ -19,19 +19,26 @@ function App(): JSX.Element {
   const [locationDetails, setLocationDetails] = React.useState<LocationsMap>({});
 
   const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | undefined>(undefined);
 
   // Callback used to load a 'page' of tweet and location data
   const loadTweets = async () => {
-    const tweetsJson = await searchTweets(hashtag, pageToken);
-    if (!tweetsJson.data.tweets) return;
-    setTweets([...tweets, ...tweetsJson.data.tweets]);
-    setPageToken(tweetsJson.next_token);
+    try {
+      const tweetsJson = await searchTweets(hashtag, pageToken);
+      if (!tweetsJson.data.tweets) return;
+      setTweets([...tweets, ...tweetsJson.data.tweets]);
+      setPageToken(tweetsJson.next_token);
 
-    const locationsJson = await getLocationDetails(
-      tweetsJson.data.tweets.map((tweet) => tweet.author.location ?? '')
-        .filter((locationName) => locationName),
-    );
-    setLocationDetails({ ...locationDetails, ...locationsJson.data });
+      const locationsJson = await getLocationDetails(
+        tweetsJson.data.tweets.map((tweet) => tweet.author.location ?? '')
+          .filter((locationName) => locationName),
+      );
+      setLocationDetails({ ...locationDetails, ...locationsJson.data });
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+    }
   };
 
   // Load tweets on mount and whenever hashtag is updated
@@ -47,6 +54,7 @@ function App(): JSX.Element {
     <div>
       <Map tweetLocations={locationDetails} tweets={tweets} />
       <Sidebar
+        error={error}
         hashtag={hashtag}
         isLoading={isLoading}
         loadMoreTweets={loadTweets}
