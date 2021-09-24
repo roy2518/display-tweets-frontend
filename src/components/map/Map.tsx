@@ -56,28 +56,13 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
           type: 'symbol',
           source: 'points',
           layout: {
+            'icon-allow-overlap': true,
             'icon-image': 'custom-marker',
             'icon-size': 0.6,
           },
         });
       });
     });
-  }, []);
-
-  // Zoom in when a marker is clicked
-  React.useEffect(() => {
-    const currentMap = map.current;
-    if (currentMap) {
-      currentMap.on('click', 'symbols', (e) => {
-        if (e.features && e.features[0].geometry.type === 'Point') {
-          const { coordinates } = e.features[0].geometry;
-          currentMap.flyTo({
-            center: [coordinates[0], coordinates[1]],
-            zoom: 5,
-          });
-        }
-      });
-    }
   }, []);
 
   // Update the map when Tweet information is updated
@@ -106,10 +91,8 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
       maxWidth: '300px',
     });
     if (currentMap !== null) {
-      currentMap.on('mouseenter', 'symbols', (e) => {
+      currentMap.on('click', 'symbols', (e) => {
         if (e.features && e.features[0].geometry.type === 'Point') {
-          // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
-          currentMap.getCanvas().style.cursor = 'pointer';
           const { coordinates } = e.features[0].geometry;
 
           // Ensure that if the map is zoomed out such that multiple
@@ -130,6 +113,11 @@ const Map = ({ tweetLocations, tweets }: MapProps): JSX.Element => {
             .setDOMContent(div)
             .addTo(currentMap);
         }
+      });
+
+      // Change cursor to a pointer when the it enters a feature in the 'symbols' layer.
+      currentMap.on('mouseenter', 'symbols', () => {
+        currentMap.getCanvas().style.cursor = 'pointer';
       });
 
       // Change cursor back to a pointer when it leaves a feature in the 'symbols' layer
