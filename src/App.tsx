@@ -21,6 +21,8 @@ function App(): JSX.Element {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | undefined>(undefined);
 
+  console.log('Hola');
+
   // Callback used to load a 'page' of tweet and location data
   const loadTweets = async () => {
     try {
