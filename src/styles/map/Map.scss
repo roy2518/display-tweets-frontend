@@ -1,9 +1,15 @@
 .map {
-    height: 100%;
+    @media screen and (max-width: 700px) {
+        height: 60%;
+        width: 100%;
+    }
+    @media screen and (min-width: 701px) {
+        height: 100%;
+        width: 70%;
+    }
     left: 0;
     position: fixed;
     top: 0;
-    width: 70%;
 }
 
 .popupContainer {

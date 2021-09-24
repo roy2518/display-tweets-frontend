@@ -30,12 +30,21 @@
 }
 
 .sidebar {
+    @media screen and (max-width: 700px) {
+        height: 40%;
+        top: 60%;
+        width: 100%;
+    }
+    @media screen and (min-width: 701px) {
+        height: 100%;
+        top: 0;
+        width: 30%;
+    }
     box-sizing: border-box;
     height: 100%;
     overflow-y: scroll;
     padding: 6px;
     position: fixed;
     right: 0;
-    top: 0;
     width: 30%;
 }
