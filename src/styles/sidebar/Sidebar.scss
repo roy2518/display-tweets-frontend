@@ -12,6 +12,14 @@
     }
 }
 
+.header {
+    background: white;
+    left: 0;
+    padding: 6px 0;
+    position: sticky;
+    top: 0;
+}
+
 .searchBar {
     border: 1px solid #dfe1e5;
     border-radius: 24px;
@@ -19,7 +27,6 @@
     display: flex;
     height: 32px;
     padding: 6px 12px;
-    position: sticky;
     width: 100%;
 }
 
@@ -45,7 +52,7 @@
     box-sizing: border-box;
     height: 100%;
     overflow-y: scroll;
-    padding: 6px;
+    padding: 0 6px;
     position: fixed;
     right: 0;
     width: 30%;

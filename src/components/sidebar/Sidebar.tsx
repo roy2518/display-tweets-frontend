@@ -30,19 +30,21 @@ const Sidebar = ({
   const [hashtagInput, setHashtagInput] = React.useState(hashtag);
 
   const searchBar = (
-    <div className="searchBar">
-      <img alt="Search Icon" src={SearchIcon} />
-      <input
-        className="hashtagInput"
-        onChange={(e) => setHashtagInput(e.target.value)}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            updateHashtag(hashtagInput);
-          }
-        }}
-        placeholder="Search for a hashtag..."
-        value={hashtagInput}
-      />
+    <div className="header">
+      <div className="searchBar">
+        <img alt="Search Icon" src={SearchIcon} />
+        <input
+          className="hashtagInput"
+          onChange={(e) => setHashtagInput(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              updateHashtag(hashtagInput);
+            }
+          }}
+          placeholder="Search for a hashtag..."
+          value={hashtagInput}
+        />
+      </div>
     </div>
   );
 
